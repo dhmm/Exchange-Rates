@@ -64,12 +64,11 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     alignItems : 'stretch',
-    backgroundColor: 'papayawhip',
-    borderWidth:2,
+    backgroundColor: 'orangered',
     borderRadius:5    
   },
   picker: {    
     width:'90%',
-    height:50
-  },
+    height:50,color:'#fff'
+  }
 });
