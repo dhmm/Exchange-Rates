@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, Picker , View} from 'react-native';
 
 export default class BaseCurrency extends React.Component {  
-  constructor()
+  constructor(props)
   {    
-    super();
-
+    super(props);
     this.state = {
       currencies : [],
       loaded : false,
@@ -37,6 +36,7 @@ export default class BaseCurrency extends React.Component {
     this.setState({
       selectedCurrency : value
     })
+    this.props.changeBaseCurrency(value);
   }
 
   render() {

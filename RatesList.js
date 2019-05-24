@@ -2,46 +2,64 @@ import React from 'react';
 import { StyleSheet, FlatList , View ,Text} from 'react-native';
 
 export default class RatesList extends React.Component {  
-  constructor() {    
-       super();
-
+  constructor(props) {    
+       super(props);
+       props.showExchangeRates = this.showExchangeRates;
        this.state = {
-           baseCurrency : 'EUR' ,
+           baseCurrency : this.props.baseCurrency ,
            exchangeRates : [] ,
            loaded : false
        }       
   }
 
-  getRates() {      
+  getRates() {         
     fetch('https://api.exchangeratesapi.io/latest?base='+this.state.baseCurrency)
     .then((response) => response.json())
     .then((responseJson) => {
-      let ratesEntries = Object.entries(responseJson.rates);
-      let exchangeRates = [];
-      ratesEntries.forEach( (entry,index) => {
-        exchangeRates.push( { key: entry[0] , value: entry[1] });
-      });
-      this.setState({
-        exchangeRates : exchangeRates ,
-        loaded : true         
-      });
+      if(responseJson.rates != null) {
+        let ratesEntries = Object.entries(responseJson.rates);
+        let exchangeRates = [];
+        ratesEntries.forEach( (entry,index) => {
+          exchangeRates.push( { key: entry[0] , value: entry[1] });
+        });
+        this.setState({
+          exchangeRates : exchangeRates ,
+          loaded : true         
+        });
+      } else {
+        this.setState({
+          loaded : false
+        })
+      }
     })
     .catch((error) => {
       console.error(error);
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.baseCurrency !== this.state.value) {
+      this.setState({ baseCurrency: nextProps.baseCurrency });
+      //getRates();
+    }
+  }
+
   render() {
-    this.getRates();
-    return (
-      <View style = {styles.container}>
-        <FlatList
-          data={this.state.exchangeRates}
-          renderItem= { ({item}) => <View style={styles.listItemView}><Text style={styles.listItem}>{item.key} = {item.value}</Text></View>
-            }
-        />
-      </View>
-    );
+    this.getRates();    
+    if(this.state.loaded) 
+    {
+      return (
+        <View style = {styles.container}>        
+          <FlatList
+            data={this.state.exchangeRates}
+            renderItem= { ({item}) => <View style={styles.listItemView}><Text style={styles.listItem}>{item.key} = {item.value}</Text></View>
+              }
+          />
+        </View>
+      );
+    } else {
+      return(<View/>);
+    }
   }
 }
 

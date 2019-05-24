@@ -4,14 +4,33 @@ import BaseCurrency from './BaseCurrency';
 import RatesList from './RatesList';
 
 export default class App extends React.Component {  
+  constructor()
+  {
+    super();
+ 
+    this.state = {
+      baseCurrency : 'BGN'
+    }
+
+    
+  }
+  
+  changeBaseCurrency(currency) {
+    this.setState( {
+      baseCurrency : currency
+    });
+  }
+
+  
+ 
   render() {
     return (
       <View style={styles.container}>        
         <View style={styles.baseCurrency}>
-          <BaseCurrency/>
+          <BaseCurrency changeBaseCurrency = { evt => this.changeBaseCurrency(evt) }/>
         </View>
         <View style={styles.ratesList}>
-          <RatesList/>
+          <RatesList baseCurrency={this.state.baseCurrency}/>
         </View>
       </View>
     );
