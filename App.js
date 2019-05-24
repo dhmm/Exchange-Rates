@@ -1,12 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import BaseRate from './BaseRate';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import BaseCurrency from './BaseCurrency';
+import RatesList from './RatesList';
 
 export default class App extends React.Component {  
   render() {
     return (
-      <View style={styles.container}>
-        <BaseRate/>
+      <View style={styles.container}>        
+        <View style={styles.baseCurrency}>
+          <BaseCurrency/>
+        </View>
+        <View style={styles.ratesList}>
+          <RatesList/>
+        </View>
       </View>
     );
   }
@@ -15,9 +21,17 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    paddingTop: 50
-   
+    paddingTop: 50 ,
+    flexDirection: 'column',        
+    alignItems: 'stretch',  
+    backgroundColor: 'peachpuff'
   },
+  baseCurrency : {
+    height: 50,     
+    alignItems : 'center'
+  },
+  ratesList : {
+    marginTop : 5,        
+    alignItems : 'center'
+  }
 });

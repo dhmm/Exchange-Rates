@@ -1,29 +1,29 @@
 import React from 'react';
 import { StyleSheet, Picker , View} from 'react-native';
 
-export default class BaseRate extends React.Component {  
+export default class BaseCurrency extends React.Component {  
   constructor()
   {    
     super();
 
     this.state = {
-      rates : [],
+      currencies : [],
       loaded : false,
-      selectedRate: null
+      selectedCurrency: null
     }
 
     fetch('https://api.exchangeratesapi.io/latest')
     .then((response) => response.json())
     .then((responseJson) => {
-      let ratesEntries = Object.entries(responseJson.rates);
-      let rates = [];
-      ratesEntries.forEach( (entry,index) => {
-        rates.push(entry[0]);
+      let currencyEntries = Object.entries(responseJson.rates);
+      let currencies = [];
+      currencyEntries.forEach( (entry,index) => {
+        currencies.push(entry[0]);
       });
       this.setState({
-        rates : rates ,
+        currencies : currencies ,
         loaded : true ,
-        selectedRate : this.state.rates[0]
+        selectedCurrency : this.state.currencies[0]
       });
     })
     .catch((error) => {
@@ -35,20 +35,20 @@ export default class BaseRate extends React.Component {
 
   updateSelectedValue(value,index) {
     this.setState({
-      selectedRate : value
+      selectedCurrency : value
     })
   }
 
   render() {
     
-    let items = this.state.rates.map( (value,index) => {
+    let items = this.state.currencies.map( (value,index) => {
       return <Picker.Item key={value} label={value} value={value} />
     })
     
     return (
-      <View style = {styles.view}>
+      <View style = {styles.container}>
         <Picker 
-          selectedValue={this.state.selectedRate} 
+          selectedValue={this.state.selectedCurrency} 
           style={styles.picker}
           onValueChange = { (evt) => this.updateSelectedValue(evt) }
           >  
@@ -60,14 +60,16 @@ export default class BaseRate extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  view: {
+  container: {
     flex:1,
     flexDirection: 'row',
-    alignItems : 'stretch'
+    alignItems : 'stretch',
+    backgroundColor: 'papayawhip',
+    borderWidth:2,
+    borderRadius:5    
   },
-  picker: {
-    backgroundColor : '#ccc',
-    width:"90%",
+  picker: {    
+    width:'90%',
     height:50
   },
 });
