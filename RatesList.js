@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, FlatList , View ,Text} from 'react-native';
+import ListItem, { listItem } from './ListItem';
 
 export default class RatesList extends React.Component {  
   constructor(props) {    
@@ -39,8 +40,7 @@ export default class RatesList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.baseCurrency !== this.state.value) {
-      this.setState({ baseCurrency: nextProps.baseCurrency });
-      //getRates();
+      this.setState({ baseCurrency: nextProps.baseCurrency });      
     }
   }
 
@@ -52,7 +52,7 @@ export default class RatesList extends React.Component {
         <View style = {styles.container}>        
           <FlatList
             data={this.state.exchangeRates}
-            renderItem= { ({item}) => <View style={styles.listItemView}><Text style={styles.listItem}>{item.key} = {item.value}</Text></View>
+            renderItem= { ({item}) => <ListItem currency = {item.key} rate = { Number((item.value).toFixed(3))}/>             
               }
           />
         </View>
@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
   container : {
     width: '90%',
     backgroundColor: 'papayawhip',
-    padding: 2,
-    borderWidth: 2
+    padding: 2,    
   } ,
   listItemView : {
 
