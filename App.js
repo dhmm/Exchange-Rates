@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import BaseRate from './BaseRate';
 
-export default class App extends React.Component {
+export default class App extends React.Component {  
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <BaseRate/>
       </View>
     );
   }
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50
+   
   },
 });
